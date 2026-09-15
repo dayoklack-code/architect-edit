@@ -20,8 +20,9 @@ export async function POST(request: Request) {
       : 'Enhance this image and increase the resolution. Preserve the original subject, identity, composition, clothing, text, colors and natural photographic appearance. Do not invent or replace important details.'
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image',
+      model: 'gemini-3.1-flash-image',
       contents: [{ role: 'user', parts: [{ inlineData: { mimeType: image.type, data: bytes.toString('base64') } }, { text: prompt }] }],
+      config: { responseModalities: ['IMAGE'] }
     })
 
     const parts = response.candidates?.[0]?.content?.parts ?? []
